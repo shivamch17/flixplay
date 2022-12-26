@@ -1,6 +1,6 @@
 # flixplay
 
-## A WIP project that i an working on
+## A WIP project that I am working on
 
 checkout the progress at [http://flixplay.shivamch.rf.gd/new/]
 
