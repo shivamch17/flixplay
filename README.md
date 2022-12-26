@@ -2,7 +2,7 @@
 
 ## A WIP project that I am working on
 
-checkout the progress at [http://flixplay.shivamch.rf.gd/new/]
+### Checkout the progress at [http://flixplay.shivamch.rf.gd/new/]
 
 - Fully responsive single page website 
 - Watching is not availabe on homepage but you can watch 
