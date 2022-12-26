@@ -10,7 +10,8 @@ movie on the movie page by navigating through navbar and
 1st episode of a series on series page
 
 
--Live tv yet to be added
+- Live tv yet to be added
+- Searching yet to be added
 
 
 
