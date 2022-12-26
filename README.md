@@ -4,6 +4,7 @@
 
 checkout the progress at [http://flixplay.shivamch.rf.gd/new/]
 
+Fully responsive single page website 
 watching is not availabe on homepage but you can watch 
 movie on the movie page by navigating through navbar and
 1st episode of a series on series page
