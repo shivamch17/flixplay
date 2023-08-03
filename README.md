@@ -14,13 +14,8 @@ movie on the movie page by navigating through navbar and
 
 ### Yet to be added
 - Live tv yet to be added
-- Searching yet to be added
-
-
 
 API USED
 - TMDB Movies API
-- Embedru streaming API
+- autoembed streaming API
 
-
-Source files are not added due to privacy
