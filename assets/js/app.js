@@ -66,6 +66,7 @@
         seriesDiv.innerHTML='';
         movieDiv.innerHTML='';
         loadQuotes();
+        loadQuotes();
         sessionStorage.setItem("onpage", "m");
         headerEl.children[0].innerText='MOVIES';
         loadBtn.classList.remove('show');
@@ -78,6 +79,7 @@
         currentPage=1;
         seriesDiv.innerHTML='';
         movieDiv.innerHTML='';
+        loadQuotes();
         loadQuotes();
         sessionStorage.setItem("onpage", "s");
         headerEl.children[0].innerText='TV SHOWS';
@@ -158,7 +160,7 @@
               El.classList.add('series');
                 El.innerHTML = `
                 <span class="rating ${getColor(vote_average)}">${vote_average}</span>
-                <img src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}" class ="poster" id="${id}">
+                <img src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}" class ="poster s" id="${id}">
                 <span class="name">${name}</span>
            `
            seriesDiv.appendChild(El);
@@ -167,7 +169,7 @@
                 El.classList.add('movie');
                 El.innerHTML = `
                    <span class="rating ${getColor(vote_average)}">${vote_average}</span>
-                   <img src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}" class ="poster" id="${id}">
+                   <img src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}" class ="poster m" id="${id}">
                    <span class="name">${title}</span>
               `  
               movieDiv.appendChild(El);
@@ -176,7 +178,9 @@
               document.getElementById(id).addEventListener('click', () => {
                   detailsDisplay.click();
                   sessionStorage.setItem('player-id',id);
-                  details(id);
+                  let type=document.getElementById(id).classList[1];
+                  sessionStorage.setItem('type',type);
+                  details(id,type);
                 })
               if(i < data.length - 1)  loopIt(i+1)
             }, 10);
@@ -207,7 +211,7 @@
             } finally {
                 hideLoader();
             }
-        }, 150);
+        }, 200);
     };
 
     function getColor(vote) {
@@ -239,14 +243,13 @@
     element.addEventListener("click", loadQuotes);
 
 
-    const details = (id)=> {
+    const details = (id,type)=> {
     const cmodalBody=document.getElementById("modalBody1")
     cmodalBody.innerHTML='';
     var urls ='';
-    var type='s';
-    if(sessionStorage.getItem("onpage")=="m"){
+    // var type='s';
+    if(type=='m'){
         urls ='https://api.themoviedb.org/3/movie/'+id+'?api_key=1cf50e6248dc270629e802686245c2c8&language=en-US';
-        type='m';
     }
     else urls ='https://api.themoviedb.org/3/tv/'+id+'?api_key=1cf50e6248dc270629e802686245c2c8&language=en-US';
     const cmodalheaderEL=document.getElementById('exampleModalToggleLabel');
@@ -256,7 +259,7 @@
             const {genres,id,imdb_id,title,runtime,overview,poster_path,release_date,vote_average,name,episode_run_time,first_air_date} = data
             const El=document.createElement("div");
             El.classList.add('cmodalbody');
-            if(type=='m'){
+            if(type=='m' || type=='h'){
                 cmodalheaderEL.innerHTML=`<h1>${title}</h1>`;
                 El.innerHTML =`
             <div><img src="https://image.tmdb.org/t/p/w200${poster_path}" class="cmodal-img"></div>
@@ -288,13 +291,14 @@
 };
     const player = () => {
         var id = sessionStorage.getItem('player-id');
+        var type = sessionStorage.getItem('type');
     const cmodalBody1 = document.getElementById("modalBody2");
     cmodalBody1.innerHTML ='';
     const El = document.createElement("div");
     El.classList.add("modal-player");
-    if(sessionStorage.getItem("onpage")=="m")
+    if(type=="m")
     El.innerHTML=`<iframe id="iframe" src="https://autoembed.to/movie/tmdb/${id}" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
-    else if(sessionStorage.getItem("onpage")=="s")
+    else if(type=="s")
     El.innerHTML=`<iframe id="iframe" src="https://autoembed.to/tv/tmdb/${id}-1-1" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
     cmodalBody1.appendChild(El);
 };
