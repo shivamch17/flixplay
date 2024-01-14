@@ -297,9 +297,11 @@
     const El = document.createElement("div");
     El.classList.add("modal-player");
     if(type=="m")
-    El.innerHTML=`<iframe id="iframe" src="https://autoembed.to/movie/tmdb/${id}" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
+    // El.innerHTML=`<iframe id="iframe" src="https://autoembed.to/movie/tmdb/${id}" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
+    El.innerHTML=`<iframe src="https://moviesapi.club/movie/${id}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`
     else if(type=="s")
-    El.innerHTML=`<iframe id="iframe" src="https://autoembed.to/tv/tmdb/${id}-1-1" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
+    // El.innerHTML=`<iframe id="iframe" src="https://autoembed.to/tv/tmdb/${id}-1-1" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
+    El.innerHTML=`<iframe id="iframe" src="https://moviesapi.to/tv/tmdb/${id}-1-1" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>`
     cmodalBody1.appendChild(El);
 };
     playerOpen.addEventListener('click', () => {
