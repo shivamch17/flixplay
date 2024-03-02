@@ -83,3 +83,52 @@
         }
     }
 }
+.tvCard {
+    width: calc(50% - 5px);
+    cursor: pointer;
+    @include md {
+        width: calc(25% - 15px);
+    }
+    @include lg {
+        width: calc(20% - 16px);
+    }
+    .posterBlock {
+        position: relative;
+        aspect-ratio: 1 / 1.2;
+        transition: all ease 0.5s;
+        .lazy-load-image-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                object-position: center;
+            }
+        }
+    }
+    .textBlock {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .title {
+            font-size: 16px;
+            line-height: 24px;
+            @include ellipsis(1);
+            @include md {
+                font-size: 16px;
+            }
+        }
+    }
+    &:hover {
+        .posterBlock {
+            opacity: 0.5;
+        }
+    }
+}

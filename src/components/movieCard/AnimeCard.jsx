@@ -9,36 +9,32 @@ import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import PosterFallback from "../../assets/no-poster.png";
 
-const MovieCard = ({ data, fromSearch, mediaType }) => {
-    const { url } = useSelector((state) => state.home);
+const AnimeCard = ({ data }) => {
     const navigate = useNavigate();
-    let posterUrl = data.poster_path
-        ? url.poster + data.poster_path
-        : PosterFallback;
     return (
         <div
             className="movieCard"
-            onClick={() =>
-                navigate(`/${data.media_type || mediaType}/${data.id}`)
+            onClick={() =>{
+                localStorage.setItem("current_backdrop_path",data.thumb)
+                navigate(`/player/anime/${data.slug}`)}
             }
         >
             <div className="posterBlock">
-                <Img className="posterImg" src={posterUrl} />
-                {!fromSearch && (
+                <Img className="posterImg" src={(data.thumb==="" || data.thumb==null) ? PosterFallback: data.thumb } />
+                {(
                     <React.Fragment>
-                        <CircleRating rating={data.vote_average.toFixed(1)} />
-                        <Genres data={data.genre_ids.slice(0, 2)} />
+                        <Genres data={data} type={"anime"}/>
                     </React.Fragment>
                 )}
             </div>
             <div className="textBlock">
-                <span className="title">{data.title || data.name}</span>
+                <span className="title">{data.name}</span>
                 <span className="date">
-                    {dayjs(data.first_air_date).format("MMM D, YYYY")} | ({mediaType==="tv" ? "TV" : "Movie"})
+                    {data.released_year} | (Anime)
                 </span>
             </div>
         </div>
     );
 };
 
-export default MovieCard;
+export default AnimeCard;

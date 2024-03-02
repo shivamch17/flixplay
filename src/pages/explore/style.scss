@@ -84,6 +84,25 @@
                 padding: 0;
             }
         }
+        .searchInput {
+            width: 100%;
+            @include md {
+                width: 300px;
+            }
+            input {
+                background-color: var(--black-light);
+                border: 0;
+                outline: 0;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 20px;
+                padding: 10px 20px;
+                color: white;
+                &::placeholder {
+                    color: var(--white-lighter);
+                }
+            }
+        }
     }
     .content {
         display: flex;

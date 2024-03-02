@@ -13,6 +13,11 @@ import SearchResult from "./pages/searchResult/SearchResult";
 import Explore from "./pages/explore/Explore";
 import PageNotFound from "./pages/404/PageNotFound";
 import Player from "./pages/player/Player";
+import ExploreAnime from "./pages/explore/ExploreAnime";
+import DetailsAnime from "./pages/details/DetailsAnime";
+import PlayerAnime from "./pages/player/PlayerAnime";
+import ExploreTv from "./pages/explore/ExploreTv";
+import PlayerTv from "./pages/player/PlayerTv";
 
 function App() {
     const dispatch = useDispatch();
@@ -58,9 +63,14 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
+                {/* <Route path="/anime/:id" element={<DetailsAnime />} /> */}
                 <Route path="/:mediaType/:id" element={<Details />} />
+                <Route path="/player/livetv/:id" element={<PlayerTv />} />
+                {/* <Route path="/player/anime/:id" element={<PlayerAnime />} /> */}
                 <Route path="/player/:mediaType/:id" element={<Player />} />
                 <Route path="/search/:query" element={<SearchResult />} />
+                {/* <Route path="/explore/anime" element={<ExploreAnime />} /> */}
+                <Route path="/explore/livetv" element={<ExploreTv />} />
                 <Route path="/explore/:mediaType" element={<Explore />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

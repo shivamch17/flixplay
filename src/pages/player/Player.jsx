@@ -175,9 +175,8 @@ const Player = () => {
           id="dd"
           src={selectedSource}
           width="90%"
-          height="700px"
           frameBorder="0"
-          scrolling="no"
+          scrolling="yes"
           allowFullScreen
         ></iframe>
         <div className="source-buttons">

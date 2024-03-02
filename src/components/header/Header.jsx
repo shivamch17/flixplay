@@ -64,8 +64,14 @@ const Header = () => {
     const navigationHandler = (type) => {
         if (type === "movie") {
             navigate("/explore/movie");
-        } else {
+        } else if(type === "tv"){
             navigate("/explore/tv");
+        }
+        else if(type==="anime"){
+            navigate("/explore/anime");
+        }
+        else{
+            navigate("/explore/livetv");
         }
         setMobileMenu(false);
     };
@@ -90,6 +96,18 @@ const Header = () => {
                         onClick={() => navigationHandler("tv")}
                     >
                         TV Shows
+                    </li>
+                    {/* <li
+                        className="menuItem"
+                        onClick={() => navigationHandler("anime")}
+                    >
+                        Anime
+                    </li> */}
+                    <li
+                        className="menuItem"
+                        onClick={() => navigationHandler("livetv")}
+                    >
+                        Live TV
                     </li>
                     <li className="menuItem">
                         <HiOutlineSearch onClick={openSearch} />

@@ -32,7 +32,6 @@ const Movies = () => {
           import.meta.env.VITE_API_KEY +
           "&language=en-US"
       );
-      console.log(response.data);
       setMovieDetails(response.data);
     } catch (error) {
       console.error("Error fetching movies:", error);
