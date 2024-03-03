@@ -42,12 +42,12 @@ const Header = () => {
         };
     }, [lastScrollY]);
 
-    const searchQueryHandler = (event) => {
-        if (event.key === "Enter" && query.length > 0) {
+    const searchQueryHandler = () => {
+        if (query.length > 0) {
             navigate(`/search/${query}`);
             setTimeout(() => {
                 setShowSearch(false);
-            }, 1000);
+            }, 100);
         }
     };
 
@@ -97,12 +97,12 @@ const Header = () => {
                     >
                         TV Shows
                     </li>
-                    {/* <li
+                    <li
                         className="menuItem"
                         onClick={() => navigationHandler("anime")}
                     >
                         Anime
-                    </li> */}
+                    </li>
                     <li
                         className="menuItem"
                         onClick={() => navigationHandler("livetv")}
@@ -129,13 +129,16 @@ const Header = () => {
                         <div className="searchInput">
                             <input
                                 type="text"
+                                autoFocus
                                 placeholder="Search for a movie or tv show...."
                                 onChange={(e) => setQuery(e.target.value)}
-                                onKeyUp={searchQueryHandler}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        searchQueryHandler();
+                                    }
+                                }}
                             />
-                            <VscChromeClose
-                                onClick={() => setShowSearch(false)}
-                            />
+                            <VscChromeClose onClick={() => setShowSearch(false)} />
                         </div>
                     </ContentWrapper>
                 </div>

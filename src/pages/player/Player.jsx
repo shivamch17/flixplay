@@ -51,12 +51,16 @@ const sources = [
 const Player = () => {
   let backdrop_path = localStorage.getItem("current_backdrop_path");
   const storedSeasonsInfo = localStorage.getItem("current_seasons_info");
-  const seasonsDataTemp = storedSeasonsInfo ? JSON.parse(storedSeasonsInfo) : [];
-  const seasonsData = seasonsDataTemp?.filter(season => season?.name !== "Specials");
+  const seasonsDataTemp = storedSeasonsInfo
+    ? JSON.parse(storedSeasonsInfo)
+    : [];
+  const seasonsData = seasonsDataTemp?.filter(
+    (season) => season?.name !== "Specials"
+  );
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const { mediaType, id } = useParams();
-  const [selectedSourceIndex, setSelectedSourceIndex] = useState(0);
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState(2);
   const [selectedSource, setSelectedSource] = useState("");
 
   const makeSource = () => {
@@ -202,17 +206,16 @@ const Player = () => {
               value={selectedSeason || ""}
             >
               {seasonsData.map((season) => (
-                <option key={season.id} value={season.season_number}>
+                <option className="season-option" key={season.id} value={season.season_number}>
                   {season.name}
                 </option>
               ))}
             </select>
-
             {selectedSeason !== null && (
               <div>
-                <div className="episode-container">
+                <div className="episode-container-anime">
                   {Array.from(
-                    { length: seasonsData[selectedSeason-1]?.episode_count },
+                    { length: seasonsData[selectedSeason - 1]?.episode_count },
                     (_, index) => index + 1
                   ).map((episodeNumber) => (
                     <div
@@ -224,7 +227,7 @@ const Player = () => {
                       key={episodeNumber}
                       onClick={() => handleEpisodeClick(episodeNumber)}
                     >
-                      S{selectedSeason}E{episodeNumber}
+                      S{selectedSeason} E{episodeNumber}
                     </div>
                   ))}
                 </div>

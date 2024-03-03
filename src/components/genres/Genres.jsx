@@ -12,15 +12,15 @@ const Genres = ({ data, type }) => {
     <>
       {type === "anime" ? (
         <div className="genres">
-          <div className="genre">{data.type_sub}</div>
+          <div className="genre">{data?.slug?.includes("-sub") ? "SUB" : "DUB"}</div>
           <div className="genre" style={{ background: "black", alignItems:"center", display:"flex" , gap:"4px"}}>
-            {data.type_sub === "SUB" ? (
+            {data?.slug?.includes("-sub") ? (
               <FaClosedCaptioning />
             ) : (
               <FaMicrophone/>
             )}
             {" "}
-            {data.latest_episode.episode}
+            {data?.latest_episode?.episode || 0}
           </div>
         </div>
       ) : (

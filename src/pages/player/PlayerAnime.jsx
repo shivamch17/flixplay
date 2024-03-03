@@ -29,9 +29,7 @@ const PlayerAnime = () => {
       let config = {
         method: "get",
         maxBodyLength: Infinity,
-        url:
-          "https://thingproxy.freeboard.io/fetch/https://api.anix.cc/movies/detail/" +
-          id,
+        url: `https://proxymaster-1-q6640207.deta.app/fetch/https://api.anix.cc/movies/detail/${id}`,
         headers: {
           authority: "api.anix.cc",
           accept: "application/json",
@@ -66,16 +64,13 @@ const PlayerAnime = () => {
   }, [id]);
 
   useEffect(() => {
-    setSelectedSourceIndex(0);
     let slug = id + "-episode-" + selectedEpisode;
     const getLinks = async () => {
       try {
         let config = {
           method: "get",
           maxBodyLength: Infinity,
-          url:
-            "https://thingproxy.freeboard.io/fetch/https://api.anix.cc/episodes/detail/" +
-            slug,
+          url: `https://proxymaster-1-q6640207.deta.app/fetch/https://api.anix.cc/episodes/detail/${slug}`,
           headers: {
             authority: "api.anix.cc",
             accept: "application/json",
@@ -99,7 +94,17 @@ const PlayerAnime = () => {
         };
         const response = await axios.request(config);
         setSources(response.data.data.links);
-        setSelectedSource(response.data.data.links[selectedSourceIndex].url);
+        const links = response.data.data.links;
+        const fileLionsIndex = links.findIndex(
+          (link) => link.type === "FILELIONS"
+        );
+        if (fileLionsIndex !== -1) {
+          setSelectedSourceIndex(fileLionsIndex);
+          setSelectedSource(links[fileLionsIndex].url);
+        } else {
+          setSelectedSource(links[0].url);
+          setSelectedSourceIndex(0);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -111,7 +116,9 @@ const PlayerAnime = () => {
     <div className="player">
       <>
         <div className="backdrop1-img">
-          {loading && <Spinner initial={true} />}
+          <div style={{ position: "absolute" }}>
+            {loading && <Spinner initial={true} />}
+          </div>
           <Img src={backdrop_path} />
         </div>
         <iframe

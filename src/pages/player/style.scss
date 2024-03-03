@@ -18,7 +18,7 @@
     }
     .source-buttons{
          display: flex;
-         gap: 2px;
+         gap: 8px;
          margin-top: 12px;
          padding: 0 5px;
          background-color: var(--black);
@@ -26,7 +26,6 @@
          flex-wrap: wrap;
          justify-content: center;
          align-items: center;
-    
          @include md{
           gap: 16px;
          }
@@ -116,42 +115,38 @@
 }
 
 #seasons{
-  padding: 0 20px;
   display: flex;
-  width: 100%;
-  justify-content: start;
   flex-direction: column;
-  color: white;
-  gap: 12px;
-  @include md{
-    padding: 0 100px;
-  }
+  align-items: center;
+  justify-content: center;
 }
 
 #seasonsDropdown{
-  padding: 12px;
-  width: fit-content;
-}
-
-.episode-container{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  @include md{
-    grid-template-columns: repeat(12, 1fr);
+  margin: 20px;
+  padding: 20px;
+  font-size: 24px;
+  width: calc(100% - 40px);
+  border-radius: 12px;
+  text-align: center;
+  color: #FFFFFF;
+  background-color: var(--black);
+  line-height: 4rem;
+  border: 2px solid #ffffff;
+  @include sm{
+    text-align: center;
+    width: calc(100% - 100px);
   }
 }
 
-.episode-container-anime{
-  margin-top: 20px;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
+.season-option{
+  font-size: 24px;
+}
+
+.episode-container-anime {
   gap: 8px;
-  @include md{
-    display: flex;
-    flex-wrap: wrap;
-  }
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .episode-div{
@@ -164,7 +159,7 @@
   font-size: 16px;
   line-height: 2rem;
   padding: 4px;
-
+  width: 100px;
   @include md {
     font-size: 16px;
     line-height: 2rem;

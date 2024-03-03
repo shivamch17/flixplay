@@ -66,10 +66,10 @@ function App() {
                 {/* <Route path="/anime/:id" element={<DetailsAnime />} /> */}
                 <Route path="/:mediaType/:id" element={<Details />} />
                 <Route path="/player/livetv/:id" element={<PlayerTv />} />
-                {/* <Route path="/player/anime/:id" element={<PlayerAnime />} /> */}
+                <Route path="/player/anime/:id" element={<PlayerAnime />} />
                 <Route path="/player/:mediaType/:id" element={<Player />} />
                 <Route path="/search/:query" element={<SearchResult />} />
-                {/* <Route path="/explore/anime" element={<ExploreAnime />} /> */}
+                <Route path="/explore/anime" element={<ExploreAnime />} />
                 <Route path="/explore/livetv" element={<ExploreTv />} />
                 <Route path="/explore/:mediaType" element={<Explore />} />
                 <Route path="*" element={<PageNotFound />} />

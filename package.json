@@ -12,6 +12,7 @@
         "@reduxjs/toolkit": "^2.0.1",
         "axios": "^1.6.5",
         "dayjs": "^1.11.10",
+        "lodash": "^4.17.21",
         "plyr": "^3.7.8",
         "react": "^18.2.0",
         "react-circular-progressbar": "^2.1.0",

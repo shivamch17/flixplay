@@ -15,12 +15,12 @@ const AnimeCard = ({ data }) => {
         <div
             className="movieCard"
             onClick={() =>{
-                localStorage.setItem("current_backdrop_path",data.thumb)
-                navigate(`/player/anime/${data.slug}`)}
+                localStorage.setItem("current_backdrop_path",data?.thumb)
+                navigate(`/player/anime/${data?.slug}`)}
             }
         >
             <div className="posterBlock">
-                <Img className="posterImg" src={(data.thumb==="" || data.thumb==null) ? PosterFallback: data.thumb } />
+                <Img className="posterImg" src={(data?.thumb==="" || data?.thumb==null) ? PosterFallback: data?.thumb } />
                 {(
                     <React.Fragment>
                         <Genres data={data} type={"anime"}/>
@@ -28,9 +28,9 @@ const AnimeCard = ({ data }) => {
                 )}
             </div>
             <div className="textBlock">
-                <span className="title">{data.name}</span>
+                <span className="title">{data?.name}</span>
                 <span className="date">
-                    {data.released_year} | (Anime)
+                    {data?.released_year} | (Anime)
                 </span>
             </div>
         </div>
