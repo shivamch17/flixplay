@@ -33,11 +33,11 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
         <span className="title">{data?.title || data?.name}</span>
         <span className="date">
           {dayjs(
-            data?.media_type === "tv"
+            data?.media_type === "tv" || mediaType === "tv"
               ? data?.first_air_date
               : data?.release_date
           ).format("MMM D, YYYY")}{" "}
-          | ({data?.media_type === "tv" ? "TV" : "Movie"})
+          | ({data?.media_type === "tv" || mediaType==="tv" ? "TV" : "Movie"})
         </span>
       </div>
     </div>
