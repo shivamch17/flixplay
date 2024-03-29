@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { fetchDataFromApi } from "./utils/api";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -59,7 +60,7 @@ function App() {
     };
 
     return (
-        <BrowserRouter>
+        <Router>
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -75,7 +76,7 @@ function App() {
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
             {/* <Footer /> */}
-        </BrowserRouter>
+        </Router>
     );
 }
 
