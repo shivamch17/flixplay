@@ -41,9 +41,9 @@ const sources = [
     ],
   },
   {
-    remotestream: [
-      "https://remotestre.am/e/?tmdb=ID",
-      "https://remotestre.am/e/?tmdb=ID&s=sea&e=epi",
+    premium: [
+      "https://vidsrc.rip/embed/movie/ID?autoplay=true",
+      "https://vidsrc.rip/embed/tv/ID/sea/epi?autoplay=true",
     ],
   },
 ];
@@ -60,7 +60,7 @@ const Player = () => {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const { mediaType, id } = useParams();
-  const [selectedSourceIndex, setSelectedSourceIndex] = useState(2);
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState(6);
   const [selectedSource, setSelectedSource] = useState("");
 
   const makeSource = () => {
@@ -108,9 +108,9 @@ const Player = () => {
           );
           break;
         case 6:
-          selectedSource = sources[6].remotestream[1].replace(
-            "ID&s=sea&e=epi",
-            `${id}&s=${sea}&e=${epi}`
+          selectedSource = sources[6].premium[1].replace(
+            "ID/sea/epi",
+            `${id}/${sea}/${epi}`
           );
           break;
         default:
@@ -141,7 +141,7 @@ const Player = () => {
           selectedSource = sources[5].moviesapi[0].replace("ID", id);
           break;
         case 6:
-          selectedSource = sources[6].remotestream[0].replace("ID", id);
+          selectedSource = sources[6].premium[0].replace("ID", id);
           break;
         default:
           selectedSource = sources[0].embedcc[0].replace("ID", id);
@@ -168,7 +168,7 @@ const Player = () => {
   useEffect(() => {
     makeSource();
   }, [selectedSourceIndex, selectedEpisode, selectedSeason]);
-
+console.log(selectedSource)
   return (
     <div className="player">
       <>
