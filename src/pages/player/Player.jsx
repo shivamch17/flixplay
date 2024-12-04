@@ -141,7 +141,7 @@ const Player = () => {
           selectedSource = sources[5].moviesapi[0].replace("ID", id);
           break;
         case 6:
-          selectedSource = sources[6].remotestream[0].replace("ID", id);
+          selectedSource = sources[6].premium[0].replace("ID", id);
           break;
         default:
           selectedSource = sources[0].embedcc[0].replace("ID", id);
@@ -168,7 +168,7 @@ const Player = () => {
   useEffect(() => {
     makeSource();
   }, [selectedSourceIndex, selectedEpisode, selectedSeason]);
-
+console.log(selectedSource)
   return (
     <div className="player">
       <>
