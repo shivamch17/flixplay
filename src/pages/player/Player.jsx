@@ -30,8 +30,8 @@ const sources = [
   },
   {
     vidsrc: [
-      "https://vidsrc.me/embed/movie?tmdb=ID",
-      "https://vidsrc.me/embed/tv?tmdb=ID&season=sea&episode=epi",
+      "https://embed.su/embed/movie/ID",
+      "https://embed.su/embed/tv/ID/sea/epi",
     ],
   },
   {
@@ -42,8 +42,8 @@ const sources = [
   },
   {
     remotestream: [
-      "https://remotestre.am/e/?tmdb=ID",
-      "https://remotestre.am/e/?tmdb=ID&s=sea&e=epi",
+      "https://vidlink.pro/movie/ID",
+      "https://vidlink.pro/tv/ID/sea/epi",
     ],
   },
 ];
@@ -60,7 +60,7 @@ const Player = () => {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const { mediaType, id } = useParams();
-  const [selectedSourceIndex, setSelectedSourceIndex] = useState(2);
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState(6);
   const [selectedSource, setSelectedSource] = useState("");
 
   const makeSource = () => {
@@ -97,8 +97,8 @@ const Player = () => {
           break;
         case 4:
           selectedSource = sources[4].vidsrc[1].replace(
-            "ID&season=sea&episode=epi",
-            `${id}&season=${sea}&episode=${epi}`
+            "ID/sea/epi",
+            `${id}/${sea}/${epi}`
           );
           break;
         case 5:
@@ -109,8 +109,8 @@ const Player = () => {
           break;
         case 6:
           selectedSource = sources[6].remotestream[1].replace(
-            "ID&s=sea&e=epi",
-            `${id}&s=${sea}&e=${epi}`
+            "ID/sea/epi",
+            `${id}/${sea}/${epi}`
           );
           break;
         default:
