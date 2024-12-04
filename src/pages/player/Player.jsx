@@ -30,8 +30,8 @@ const sources = [
   },
   {
     vidsrc: [
-      "https://vidsrc.me/embed/movie?tmdb=ID",
-      "https://vidsrc.me/embed/tv?tmdb=ID&season=sea&episode=epi",
+      "https://embed.su/embed/movie/ID",
+      "https://embed.su/embed/tv/ID/sea/epi",
     ],
   },
   {
@@ -41,9 +41,9 @@ const sources = [
     ],
   },
   {
-    premium: [
-      "https://vidsrc.rip/embed/movie/ID?autoplay=true",
-      "https://vidsrc.rip/embed/tv/ID/sea/epi?autoplay=true",
+    remotestream: [
+      "https://vidlink.pro/movie/ID",
+      "https://vidlink.pro/tv/ID/sea/epi",
     ],
   },
 ];
@@ -97,8 +97,8 @@ const Player = () => {
           break;
         case 4:
           selectedSource = sources[4].vidsrc[1].replace(
-            "ID&season=sea&episode=epi",
-            `${id}&season=${sea}&episode=${epi}`
+            "ID/sea/epi",
+            `${id}/${sea}/${epi}`
           );
           break;
         case 5:
@@ -108,7 +108,7 @@ const Player = () => {
           );
           break;
         case 6:
-          selectedSource = sources[6].premium[1].replace(
+          selectedSource = sources[6].remotestream[1].replace(
             "ID/sea/epi",
             `${id}/${sea}/${epi}`
           );
