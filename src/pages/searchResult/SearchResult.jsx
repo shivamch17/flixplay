@@ -56,11 +56,10 @@ const SearchResult = () => {
                     {data?.results?.length > 0 ? (
                         <>
                             <div className="pageTitle">
-                                {`Search ${
-                                    data?.total_results > 1
+                                {`Search ${data?.total_results > 1
                                         ? "results"
                                         : "result"
-                                } of '${query}'`}
+                                    } of '${query}'`}
                             </div>
                             <InfiniteScroll
                                 className="content"
@@ -82,9 +81,12 @@ const SearchResult = () => {
                             </InfiniteScroll>
                         </>
                     ) : (
-                        <span className="resultNotFound">
-                            Sorry, Results not found!
-                        </span>
+                        <div className="resultNotFound" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", flexDirection: "column" }}>
+                            <span className="resultNotFound">
+                                Sorry, Results not found!
+                            </span>
+                            <img src={noResults} alt="No Results" style={{ maxWidth: "300px", maxHeight: "300px" }} />
+                        </div>
                     )}
                 </ContentWrapper>
             )}
