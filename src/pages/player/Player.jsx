@@ -141,7 +141,7 @@ const Player = () => {
           selectedSource = sources[5].moviesapi[0].replace("ID", id);
           break;
         case 6:
-          selectedSource = sources[6].premium[0].replace("ID", id);
+          selectedSource = sources[6].remotestream[0].replace("ID", id);
           break;
         default:
           selectedSource = sources[0].embedcc[0].replace("ID", id);
@@ -168,51 +168,76 @@ const Player = () => {
   useEffect(() => {
     makeSource();
   }, [selectedSourceIndex, selectedEpisode, selectedSeason]);
-console.log(selectedSource)
+
+  console.log(selectedSource);
+
   return (
     <div className="player">
-      <>
-        <div className="backdrop1-img">
-          <Img src={backdrop_path} />
-        </div>
-        <iframe
-          id="dd"
-          src={selectedSource}
-          width="90%"
-          frameBorder="0"
-          scrolling="yes"
-          allowFullScreen
-        ></iframe>
-        <div className="source-buttons">
-          {sources.map((source, index) => (
-            <div
-              key={index}
-              onClick={() => handleButtonClick(index)}
-              className={
-                selectedSourceIndex === index
-                  ? "source-btn-active button-62"
-                  : "button-62"
-              }
-            >
-              Source {index + 1}
-            </div>
-          ))}
-        </div>
-        {mediaType == "tv" && (
-          <div id="seasons">
+      <div className="backdrop1-img">
+        <Img src={backdrop_path} />
+      </div>
+
+      <div className="content-wrapper">
+        <div className="left-column">
+          <iframe
+            id="dd"
+            src={selectedSource}
+            frameBorder="0"
+            scrolling="yes"
+            allowFullScreen
+          ></iframe>
+          
+          <div className="source-buttons">
             <select
-              id="seasonsDropdown"
-              onChange={handleSeasonChange}
-              value={selectedSeason || ""}
+              className="source-dropdown"
+              onChange={(e) => handleButtonClick(parseInt(e.target.value))}
+              value={selectedSourceIndex}
             >
-              {seasonsData.map((season) => (
-                <option className="season-option" key={season.id} value={season.season_number}>
-                  {season.name}
+              {sources.map((source, index) => (
+                <option key={index} value={index}>
+                  Source {index + 1}
                 </option>
               ))}
             </select>
-            {selectedSeason !== null && (
-              <div>
+            
+            <div className="source-grid">
+              {sources.map((source, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleButtonClick(index)}
+                  className={
+                    selectedSourceIndex === index
+                      ? "source-btn-active button-62"
+                      : "button-62"
+                  }
+                >
+                  Source {index + 1}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="right-column">
+          {mediaType === "tv" && (
+            <div id="seasons">
+              <select
+                id="seasonsDropdown"
+                onChange={handleSeasonChange}
+                value={selectedSeason || ""}
+              >
+                {seasonsData.map((season) => (
+                  <option
+                    className="season-option"
+                    key={season.id}
+                    value={season.season_number}
+                  >
+                    {season.name}
+                  </option>
+                ))}
+              </select>
+
+              {selectedSeason !== null && (
                 <div className="episode-container-anime">
                   {Array.from(
                     { length: seasonsData[selectedSeason - 1]?.episode_count },
@@ -231,11 +256,11 @@ console.log(selectedSource)
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
-          </div>
-        )}
-      </>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

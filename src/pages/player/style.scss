@@ -1,171 +1,272 @@
 @import "../../mixins.scss";
 
 .player {
-    width: 100%;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    // justify-content: center;
-    align-items: center;
-    background-color: var(--black);
-    padding-top: 100px;
-    margin-bottom: 40px;
-    @include md {
-        margin-bottom: 40px;
-        padding-top: 100px;
-        min-height: 700px;
-    }
-    .source-buttons{
-         display: flex;
-         gap: 8px;
-         margin-top: 12px;
-         padding: 0 5px;
-         background-color: var(--black);
-         color: white;
-         flex-wrap: wrap;
-         justify-content: center;
-         align-items: center;
-         @include md{
-          gap: 16px;
-         }
-        }
-}
-
-.button-62 {
-  border-radius: 12px;
-  border: 2px solid #f24f1366;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  font-size: 16px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 2.5rem;
-  padding: 0 1rem;
-
-  @include md {
-    font-size: 22px;
-    line-height: 3.5;
-    font-weight: 800;
-    padding: 0 3rem;
-  }
-}
-
-.source-btn-active{
-  background-color: #dc4b16;
-}
-
-#player1 {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  object-fit: contain;
-  #ddplayer{
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    object-fit: contain;
-    @include md {
-      margin: 50px;
-      width: calc(100vw - 100px) !important;
-      height: calc(100vh - 200px) !important;
-      margin-top: 100px;
-    }
-    width: calc(100vw - 10px) !important;
-    height: 300px !important;
-    video{
-      width: 100%;
-    }
-  }
-}
-
-#dd{
-  position: absolute;
-  height: 400px !important;
-  z-index: 2;
-  @include md {
-      height: calc(100vh - 150px) !important;
-  }
-}
-
-.backdrop1-img {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  height: 400px;
-  z-index: 1;
-  opacity: 0.4;
-  overflow: hidden;
-  .lazy-load-image-background {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #04152d;
+
+  .backdrop1-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    overflow: hidden;
+    
+    .lazy-load-image-background {
       width: 100%;
       height: 100%;
       img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          object-position: center;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
+    }
   }
-  @include md {
-    height: calc(100vh - 150px) !important;
-}
-}
 
-#seasons{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  .content-wrapper {
+    padding-top: 60px;
+    display: flex;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
 
-#seasonsDropdown{
-  margin: 20px;
-  padding: 20px;
-  font-size: 24px;
-  width: calc(100% - 40px);
-  border-radius: 12px;
-  text-align: center;
-  color: #FFFFFF;
-  background-color: var(--black);
-  line-height: 4rem;
-  border: 2px solid #ffffff;
-  @include sm{
+    .left-column {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      
+      iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 12px;
+      }
+    }
+
+    .right-column {
+      flex: 1;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .source-buttons {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+
+    .source-dropdown {
+      display: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      background: #2c3440;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      
+      option {
+        background: #2c3440;
+        padding: 8px;
+      }
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+  }
+
+  .button-62 {
+    background: rgba(255, 255, 255, 0.1);
+    border: 0;
+    border-radius: 8px;
+    color: #d4d4d8;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 10px;
     text-align: center;
-    width: calc(100% - 100px);
+    transition: all 0.3s;
+    font-size: medium;
+    
+    &:hover {
+      background: #da2f68;
+    }
+  }
+
+  .source-btn-active {
+    background: #da2f68;;
+    color: white;
+  }
+
+  #seasons {
+    margin-top: 10x;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+
+    #seasonsDropdown {
+      width: 100%;
+      padding: 15px;
+      border-radius: 8px;
+      background: #2c3440;
+      color: white;
+      border: none;
+      font-size: large;
+      margin-bottom: 20px;
+      cursor: pointer;
+      
+      option {
+        background: #2c3440;
+      }
+    }
+
+    .episode-container-anime {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+      }
+    }
+
+    .episode-div {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: #d4d4d8;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .episode-div-active {
+      background: #da2f68;
+      color: white;
+      
+      &:hover {
+        background: #da2f68;
+      }
+    }
   }
 }
 
-.season-option{
-  font-size: 24px;
+@media (max-width: 1024px) {
+  .player .content-wrapper {
+    flex-direction: column;
+    
+    .right-column {
+      max-width: 100%;
+    }
+
+    .source-buttons {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+
+    .episode-container-anime {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
 }
 
-.episode-container-anime {
-  gap: 8px;
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
+@media (max-width: 768px) {
+  .player {
+    padding: 10px;
+
+    .content-wrapper {
+      padding-top: 40px;
+      gap: 1rem;
+    }
+
+    .source-buttons {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      padding: 15px;
+      gap: 8px;
+    }
+
+    .episode-container-anime {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 8px;
+    }
+
+    .button-62, .episode-div {
+      font-size: 13px;
+      padding: 8px;
+    }
+
+    #seasons {
+      padding: 15px;
+
+      #seasonsDropdown {
+        padding: 8px;
+        font-size: 14px;
+      }
+    }
+  }
 }
 
-.episode-div{
-  text-align: center;
-  border-radius: 12px;
-  border: 2px solid #f24f1366;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  font-size: 16px;
-  line-height: 2rem;
-  padding: 4px;
-  width: 100px;
-  @include md {
-    font-size: 16px;
-    line-height: 2rem;
+@media (max-width: 480px) {
+  .player {
     padding: 8px;
+
+    .content-wrapper {
+      padding-top: 30px;
+      gap: 0.8rem;
+    }
+
+    .source-buttons {
+      padding: 12px;
+
+      .source-dropdown {
+        display: block;
+        font-size: 15px;
+      }
+
+      .source-grid {
+        display: none;
+      }
+    }
+
+    .episode-container-anime {
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 6px;
+    }
+
+    .button-62, .episode-div {
+      font-size: 15px;
+      padding: 6px;
+    }
+
+    #seasons {
+      padding: 12px;
+
+      #seasonsDropdown {
+        padding: 12px;
+        font-size: 15px;
+      }
+    }
   }
-}
-.episode-div-active{
-  background-color: #dc4b16;
 }
