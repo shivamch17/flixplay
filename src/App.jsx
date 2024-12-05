@@ -68,6 +68,7 @@ function App() {
                 <Route path="/player/livetv/:id" element={<PlayerTv />} />
                 <Route path="/player/anime/:id" element={<PlayerAnime />} />
                 <Route path="/player/:mediaType/:id" element={<Player />} />
+                <Route path="/player/:mediaType/:id/:season/:episode" element={<Player />} />
                 <Route path="/search/:query" element={<SearchResult />} />
                 <Route path="/explore/anime" element={<ExploreAnime />} />
                 <Route path="/explore/livetv" element={<ExploreTv />} />

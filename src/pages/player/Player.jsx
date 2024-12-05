@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./style.scss";
 import Img from "../../components/lazyLoadImage/Img";
+import useFetch from "../../hooks/useFetch";
 
 const sources = [
   {
@@ -49,19 +51,21 @@ const sources = [
 ];
 
 const Player = () => {
-  let backdrop_path = localStorage.getItem("current_backdrop_path");
-  const storedSeasonsInfo = localStorage.getItem("current_seasons_info");
-  const seasonsDataTemp = storedSeasonsInfo
-    ? JSON.parse(storedSeasonsInfo)
-    : [];
+  const { mediaType, id, season: urlSeason, episode: urlEpisode } = useParams();
+  const [selectedSeason, setSelectedSeason] = useState(urlSeason ? parseInt(urlSeason) : 1);
+  const [selectedEpisode, setSelectedEpisode] = useState(urlEpisode ? parseInt(urlEpisode) : 1);
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState(6);
+  const [selectedSource, setSelectedSource] = useState("");
+  const navigate = useNavigate();
+  const { url } = useSelector((state) => state.home);
+
+  // Fetch media details
+  const { data: mediaDetails, loading } = useFetch(`/${mediaType}/${id}`);
+  const backdrop_path = mediaDetails?.backdrop_path ? (url.backdrop + mediaDetails.backdrop_path) : "";
+  const seasonsDataTemp = mediaDetails?.seasons || [];
   const seasonsData = seasonsDataTemp?.filter(
     (season) => season?.name !== "Specials"
   );
-  const [selectedSeason, setSelectedSeason] = useState(1);
-  const [selectedEpisode, setSelectedEpisode] = useState(1);
-  const { mediaType, id } = useParams();
-  const [selectedSourceIndex, setSelectedSourceIndex] = useState(6);
-  const [selectedSource, setSelectedSource] = useState("");
 
   const makeSource = () => {
     let selectedSource;
@@ -80,7 +84,7 @@ const Player = () => {
         case 1:
           selectedSource = sources[1].smashstream[1].replace(
             "ID&season=sea&episode=epi",
-            `${id}&season=${epi}&episode=${epi}`
+            `${id}&season=${sea}&episode=${epi}`
           );
           break;
         case 2:
@@ -155,10 +159,16 @@ const Player = () => {
     const selectedSeasonNumber = parseInt(event.target.value, 10);
     setSelectedSeason(selectedSeasonNumber);
     setSelectedEpisode(1);
+    if (mediaType === "tv") {
+      navigate(`/player/${mediaType}/${id}/${selectedSeasonNumber}/1`);
+    }
   };
 
   const handleEpisodeClick = (episodeNumber) => {
     setSelectedEpisode(episodeNumber);
+    if (mediaType === "tv") {
+      navigate(`/player/${mediaType}/${id}/${selectedSeason}/${episodeNumber}`);
+    }
   };
 
   const handleButtonClick = (index) => {
@@ -167,16 +177,48 @@ const Player = () => {
 
   useEffect(() => {
     makeSource();
-  }, [selectedSourceIndex, selectedEpisode, selectedSeason]);
 
-  console.log(selectedSource);
+    if (mediaDetails) {
+      // Save current playback info to localStorage
+      const playbackInfo = {
+        id,
+        mediaType,
+        poster_path: mediaDetails.poster_path ? (url.backdrop?.replace('w1280','w400') + mediaDetails.poster_path) : "",
+        backdrop_path,
+        title: mediaDetails.name || mediaDetails.title,
+        season: mediaType === "tv" ? selectedSeason : null,
+        episode: mediaType === "tv" ? selectedEpisode : null,
+        timestamp: new Date().getTime()
+      };
+
+      // Get existing continue watching list
+      let continueWatching = JSON.parse(localStorage.getItem("continue_watching") || "[]");
+
+      // Remove if already exists
+      continueWatching = continueWatching.filter(item => !(item.id === id && item.mediaType === mediaType));
+
+      // Add to beginning of array
+      continueWatching.unshift(playbackInfo);
+
+      // Keep only last 10 items
+      if (continueWatching.length > 10) {
+        continueWatching = continueWatching.slice(0, 10);
+      }
+
+      localStorage.setItem("continue_watching", JSON.stringify(continueWatching));
+    }
+  }, [selectedSourceIndex, selectedEpisode, selectedSeason, mediaDetails]);
 
   return (
     <div className="player">
       <div className="backdrop1-img">
-        <Img src={backdrop_path} />
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (
+          <Img src={backdrop_path} />
+        )}
       </div>
-      
+
       {mediaType === "tv" ? (
         <div className="content-wrapper tv-layout">
           <div className="left-column">
@@ -187,7 +229,7 @@ const Player = () => {
               scrolling="yes"
               allowFullScreen
             ></iframe>
-            
+
             <div className="source-buttons">
               <select
                 className="source-dropdown"
@@ -200,7 +242,7 @@ const Player = () => {
                   </option>
                 ))}
               </select>
-              
+
               <div className="source-grid">
                 {sources.map((source, index) => (
                   <div
@@ -236,7 +278,7 @@ const Player = () => {
                   </option>
                 ))}
               </select>
-              
+
               {selectedSeason !== null && (
                 <div className="episode-container-anime">
                   {Array.from(
@@ -269,7 +311,7 @@ const Player = () => {
             scrolling="yes"
             allowFullScreen
           ></iframe>
-          
+
           <div className="source-buttons">
             <select
               className="source-dropdown"
@@ -282,7 +324,7 @@ const Player = () => {
                 </option>
               ))}
             </select>
-            
+
             <div className="source-grid">
               {sources.map((source, index) => (
                 <div

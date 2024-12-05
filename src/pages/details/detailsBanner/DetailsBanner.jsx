@@ -23,8 +23,7 @@ const DetailsBanner = ({ video, crew }) => {
     const { data, loading } = useFetch(`/${mediaType}/${id}`);
 
     const { url } = useSelector((state) => state.home);
-    localStorage.setItem("current_backdrop_path",url?.backdrop + data?.backdrop_path);
-    localStorage.setItem("current_seasons_info",JSON.stringify(data?.seasons || []));
+
     const _genres = data?.genres?.map((g) => g.id);
 
     const director = crew?.filter((f) => f.job === "Director");
@@ -36,6 +35,14 @@ const DetailsBanner = ({ video, crew }) => {
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
         return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+    };
+
+    const playVideo = () => {
+        if (mediaType === "tv") {
+            navigate(`/player/${mediaType}/${id}/1/1`);
+        } else {
+            navigate(`/player/${mediaType}/${id}`);
+        }
     };
 
     return (
@@ -55,7 +62,7 @@ const DetailsBanner = ({ video, crew }) => {
                                             <Img
                                                 className="posterImg"
                                                 src={
-                                                    url.backdrop?.replace('w1280','w400') +
+                                                    url.backdrop?.replace('w1280', 'w400') +
                                                     data.poster_path
                                                 }
                                                 ww={"350px"}
@@ -69,11 +76,10 @@ const DetailsBanner = ({ video, crew }) => {
                                     </div>
                                     <div className="right">
                                         <div className="title">
-                                            {`${
-                                                data.name || data.title
-                                            } (${dayjs(
-                                                data?.release_date
-                                            ).format("YYYY")})`}
+                                            {`${data.name || data.title
+                                                } (${dayjs(
+                                                    data?.release_date
+                                                ).format("YYYY")})`}
                                         </div>
                                         <div className="subtitle">
                                             {data.tagline}
@@ -101,13 +107,11 @@ const DetailsBanner = ({ video, crew }) => {
                                             </div> */}
                                             <div
                                                 className="playbtn"
-                                                onClick={() => {
-                                                    navigate(`/player/${mediaType}/${id}`)
-                                                }}
+                                                onClick={playVideo}
                                             >
                                                 <PlayIcon />
                                                 <span className="text">
-                                                    Watch {mediaType=="tv"?"TV Show":"Movie"}
+                                                    Watch {mediaType == "tv" ? "TV Show" : "Movie"}
                                                 </span>
                                             </div>
                                         </div>
