@@ -61,7 +61,7 @@ const Player = () => {
 
   // Fetch media details
   const { data: mediaDetails, loading } = useFetch(`/${mediaType}/${id}`);
-  const backdrop_path = mediaDetails?.backdrop_path ? (url.backdrop + mediaDetails.backdrop_path) : "";
+  const backdrop_path = mediaDetails?.backdrop_path ? ("https://image.tmdb.org/t/p/w1280" + mediaDetails.backdrop_path) : "";
   const seasonsDataTemp = mediaDetails?.seasons || [];
   const seasonsData = seasonsDataTemp?.filter(
     (season) => season?.name !== "Specials"
@@ -183,8 +183,8 @@ const Player = () => {
       const playbackInfo = {
         id,
         mediaType,
-        poster_path: mediaDetails.poster_path ? (url.backdrop?.replace('w1280','w400') + mediaDetails.poster_path) : "",
-        backdrop_path,
+        poster_path: mediaDetails.poster_path ? ("https://image.tmdb.org/t/p/w185" + mediaDetails.poster_path) : "",
+        backdrop_path: mediaDetails.backdrop_path ? ("https://image.tmdb.org/t/p/w1280" + mediaDetails.backdrop_path) : "",
         title: mediaDetails.name || mediaDetails.title,
         season: mediaType === "tv" ? selectedSeason : null,
         episode: mediaType === "tv" ? selectedEpisode : null,

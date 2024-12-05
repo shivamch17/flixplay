@@ -1,21 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Img from "../../../components/lazyLoadImage/Img";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from "react-icons/bs";
 
 dayjs.extend(relativeTime);
 
 const ContinueWatching = () => {
     const navigate = useNavigate();
     const [continueWatching, setContinueWatching] = useState([]);
+    const [show, setShow] = useState(false);
+    const carouselContainer = useRef();
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("continue_watching") || "[]");
         setContinueWatching(data);
+        setShow(data.length > 5 ? true : false);
     }, []);
+
+    const navigation = (dir) => {
+        const container = carouselContainer.current;
+        const scrollAmount = dir === "left"
+            ? container.scrollLeft - (container.offsetWidth + 20)
+            : container.scrollLeft + (container.offsetWidth + 20);
+
+        container.scrollTo({
+            left: scrollAmount,
+            behavior: "smooth",
+        });
+    };
 
     const handleRemove = (id, mediaType, event) => {
         event.stopPropagation();
@@ -37,18 +53,32 @@ const ContinueWatching = () => {
     if (continueWatching.length === 0) return null;
 
     return (
-        <div className="continueWatchingSection">
+        <div className="cwcarousel">
             <ContentWrapper>
-                <div className="sectionHeading">Continue Watching</div>
-                <div className="content">
+                <div className="cwcarouselTitle">Continue Watching</div>
+                {
+                    show && (
+                        <>
+                            <BsFillArrowLeftCircleFill
+                                className="cwcarouselLeftNav cwarrow"
+                                onClick={() => navigation("left")}
+                            />
+                            <BsFillArrowRightCircleFill
+                                className="cwcarouselRightNav cwarrow"
+                                onClick={() => navigation("right")}
+                            />
+                        </>
+                    )
+                }
+                <div className="cwcarouselItems" ref={carouselContainer}>
                     {continueWatching.map((item) => (
-                        <div 
-                            key={`${item.id}-${item.mediaType}`} 
-                            className="movieCard" 
+                        <div
+                            key={`${item.id}-${item.mediaType}`}
+                            className="movieCard"
                             onClick={() => handleClick(item)}
                         >
                             <div className="posterBlock">
-                                <div 
+                                <div
                                     className="removeButton"
                                     onClick={(e) => handleRemove(item.id, item.mediaType, e)}
                                 >
@@ -73,7 +103,7 @@ const ContinueWatching = () => {
                     ))}
                 </div>
             </ContentWrapper>
-        </div>
+        </div >
     );
 };
 

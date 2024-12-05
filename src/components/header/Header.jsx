@@ -97,7 +97,7 @@ const Header = () => {
                     >
                         TV Shows
                     </li>
-                    <li
+                    {/* <li
                         className="menuItem"
                         onClick={() => navigationHandler("anime")}
                     >
@@ -108,7 +108,7 @@ const Header = () => {
                         onClick={() => navigationHandler("livetv")}
                     >
                         Live TV
-                    </li>
+                    </li> */}
                     <li className="menuItem">
                         <HiOutlineSearch onClick={openSearch} />
                     </li>
