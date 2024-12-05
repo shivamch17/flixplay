@@ -176,9 +176,92 @@ const Player = () => {
       <div className="backdrop1-img">
         <Img src={backdrop_path} />
       </div>
+      
+      {mediaType === "tv" ? (
+        <div className="content-wrapper tv-layout">
+          <div className="left-column">
+            <iframe
+              id="dd"
+              src={selectedSource}
+              frameBorder="0"
+              scrolling="yes"
+              allowFullScreen
+            ></iframe>
+            
+            <div className="source-buttons">
+              <select
+                className="source-dropdown"
+                onChange={(e) => handleButtonClick(parseInt(e.target.value))}
+                value={selectedSourceIndex}
+              >
+                {sources.map((source, index) => (
+                  <option key={index} value={index}>
+                    Source {index + 1}
+                  </option>
+                ))}
+              </select>
+              
+              <div className="source-grid">
+                {sources.map((source, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleButtonClick(index)}
+                    className={
+                      selectedSourceIndex === index
+                        ? "source-btn-active button-62"
+                        : "button-62"
+                    }
+                  >
+                    Source {index + 1}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-      <div className="content-wrapper">
-        <div className="left-column">
+          <div className="right-column">
+            <div id="seasons">
+              <select
+                id="seasonsDropdown"
+                onChange={handleSeasonChange}
+                value={selectedSeason || ""}
+              >
+                {seasonsData.map((season) => (
+                  <option
+                    className="season-option"
+                    key={season.id}
+                    value={season.season_number}
+                  >
+                    {season.name}
+                  </option>
+                ))}
+              </select>
+              
+              {selectedSeason !== null && (
+                <div className="episode-container-anime">
+                  {Array.from(
+                    { length: seasonsData[selectedSeason - 1]?.episode_count },
+                    (_, index) => index + 1
+                  ).map((episodeNumber) => (
+                    <div
+                      className={
+                        selectedEpisode === episodeNumber
+                          ? "episode-div-active episode-div"
+                          : "episode-div"
+                      }
+                      key={episodeNumber}
+                      onClick={() => handleEpisodeClick(episodeNumber)}
+                    >
+                      S{selectedSeason} E{episodeNumber}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="content-wrapper movie-layout">
           <iframe
             id="dd"
             src={selectedSource}
@@ -217,50 +300,7 @@ const Player = () => {
             </div>
           </div>
         </div>
-
-        <div className="right-column">
-          {mediaType === "tv" && (
-            <div id="seasons">
-              <select
-                id="seasonsDropdown"
-                onChange={handleSeasonChange}
-                value={selectedSeason || ""}
-              >
-                {seasonsData.map((season) => (
-                  <option
-                    className="season-option"
-                    key={season.id}
-                    value={season.season_number}
-                  >
-                    {season.name}
-                  </option>
-                ))}
-              </select>
-
-              {selectedSeason !== null && (
-                <div className="episode-container-anime">
-                  {Array.from(
-                    { length: seasonsData[selectedSeason - 1]?.episode_count },
-                    (_, index) => index + 1
-                  ).map((episodeNumber) => (
-                    <div
-                      className={
-                        selectedEpisode === episodeNumber
-                          ? "episode-div-active episode-div"
-                          : "episode-div"
-                      }
-                      key={episodeNumber}
-                      onClick={() => handleEpisodeClick(episodeNumber)}
-                    >
-                      S{selectedSeason} E{episodeNumber}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
