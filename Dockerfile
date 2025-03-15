@@ -1,20 +1,28 @@
-# Use the official Node.js image based on Alpine
-FROM node:alpine
+# Build stage
+FROM node:18-alpine as build
 
-# Set the working directory
-WORKDIR /
+WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package files and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Build the app
+RUN npm run build
 
-# Command to run the Vite app
-CMD ["npm", "run", "dev"]
+# Production stage
+FROM nginx:alpine
+
+# Copy built assets from build stage
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Add your nginx config if needed
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
