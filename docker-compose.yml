@@ -3,11 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: flixplay_app
     ports:
       - "80:4173"
-    volumes:
-      - ./:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=production
+      - HOST=0.0.0.0
     restart: always
