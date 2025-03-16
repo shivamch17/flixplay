@@ -8,10 +8,6 @@ logs
 # Ignore build output
 dist
 
-# Ignore environment variables
-.env
-.env.local
-
 # Ignore npm debug files
 npm-debug.log*
 yarn-debug.log*
